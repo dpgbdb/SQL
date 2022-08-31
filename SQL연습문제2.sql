@@ -127,9 +127,43 @@ where `t_dist`=1 group by `t_a_no` having `합계`>=100000 order by `합계` des
 #실습2-25
 select * from `bank_account` AS a 
 join`bank_customer` as b 
-on 1=1 group by `a_no` ;
+on a.a_c_no=b.c_no;
 #실습2-26
+select  
+`a_no` as `계좌번호`,
+`a_item_name`as `계좌이름`,
+`a_c_no` as`주민번호(사업자번호)`,
+`c_name` as `고객명`,
+`a_balance` as `현재 잔액`
+from`bank_account` as a
+join `bank_customer` as b
+on a.a_c_no=b.c_no;
 #실습2-27
+select * from `bank_transaction` as a
+ join `bank_account` as b
+ on 1=1 group by `t_no`,`a_no`;
 #실습2-28
+SELECT 
+	`t_no` AS `거래번호`,
+	`t_a_no` AS `계좌번호`,
+	`a_c_no` AS `고객번호(주민번호)`,
+	`t_dist` AS `거래구분`,
+	`t_amount` AS `거래금액`,
+	`t_datetime` AS `거래일자`
+FROM `bank_account` AS a
+JOIN `bank_transaction` AS b
+ON a.a_no = b.t_a_no;
 #실습2-29
+select 
+`t_no`,`a_no`,`c_no`,`t_dist`,`a_item_name`,`c_name`,`t_amount`,`t_datetime` from `bank_transaction` as a
+join `bank_account` as b on a.t_a_no=b.a_no
+join `bank_customer` as c on b.a_c_no=c.c_no
+where `t_dist`=1 Order by `t_amount` desc;
 #실습2-30
+select 
+`t_no`,`a_no`,`c_no`,`t_dist`,`a_item_name`,`c_name`,COUNT(`t_no`) as `거래건수`
+from `bank_transaction` as a
+join `bank_account` as b on a.t_a_no=b.a_no
+join `bank_customer` as c on b.a_c_no=c.c_no
+where `t_dist` in(1,2) and `c_dist`=1
+group by `c_no` order by `t_dist`asc,`거래건수` desc;
