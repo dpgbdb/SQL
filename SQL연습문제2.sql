@@ -123,8 +123,11 @@ select
 `t_dist`,
 sum(`t_amount`)as`합계`
 from`bank_transaction`
-where `t_dist`=1
+where `t_dist`=1 group by `t_a_no` having `합계`>=100000 order by `합계` desc;
 #실습2-25
+select * from `bank_account` AS a 
+join`bank_customer` as b 
+on 1=1 group by `a_no` ;
 #실습2-26
 #실습2-27
 #실습2-28
